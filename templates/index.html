@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coin Flip Simulator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="bg-glow"></div>
+
+  <header class="site-header">
+    <h1>Coin Flip <span>Simulator</span></h1>
+    <p class="tagline">Heads or tails? Flip it and watch probability work.</p>
+  </header>
+
+  <main class="layout">
+    <!-- Coin stage -->
+    <section class="card stage">
+      <div class="coin-wrap" id="coinWrap">
+        <div class="coin" id="coin" aria-hidden="true">
+          <div class="face heads"><span>H</span></div>
+          <div class="face tails"><span>T</span></div>
+        </div>
+        <div class="shadow" id="shadow"></div>
+      </div>
+
+      <p class="result" id="result" aria-live="polite">Press flip to start</p>
+
+      <div class="controls">
+        <button class="btn primary" id="flipBtn">Flip coin</button>
+        <button class="btn ghost" id="resetBtn">Reset</button>
+      </div>
+      <p class="hint">Tip: press <kbd>Space</kbd> to flip &middot; <label><input type="checkbox" id="soundToggle" checked> sound</label></p>
+    </section>
+
+    <!-- Stats -->
+    <section class="card stats-card">
+      <h2>Stats</h2>
+      <div class="stats-grid">
+        <div class="stat heads-stat"><span class="label">Heads</span><span class="value" id="heads">0</span><span class="sub" id="headsPct">0%</span></div>
+        <div class="stat tails-stat"><span class="label">Tails</span><span class="value" id="tails">0</span><span class="sub" id="tailsPct">0%</span></div>
+        <div class="stat"><span class="label">Total flips</span><span class="value" id="total">0</span></div>
+        <div class="stat"><span class="label">Current streak</span><span class="value" id="streak">–</span></div>
+        <div class="stat"><span class="label">Best heads streak</span><span class="value" id="bestHeads">0</span></div>
+        <div class="stat"><span class="label">Best tails streak</span><span class="value" id="bestTails">0</span></div>
+      </div>
+
+      <div class="ratio-bar" aria-hidden="true"><div class="ratio-fill" id="ratioFill"></div></div>
+
+      <h3>Recent flips</h3>
+      <div class="history" id="history"><span class="empty">No flips yet</span></div>
+    </section>
+
+    <!-- Chart -->
+    <section class="card chart-card">
+      <h2>Heads % over time</h2>
+      <p class="muted">As the number of flips grows, the heads percentage should settle close to the dashed 50% line.</p>
+      <div class="chart-box"><canvas id="chart"></canvas></div>
+    </section>
+
+    <!-- About the math -->
+    <section class="card about-card">
+      <h2>About the math</h2>
+      <p>A fair coin has a probability of <strong>½</strong> for each side, and every flip is independent: the coin has no memory. With only a few flips, results can look lopsided and long streaks are common. The <strong>Law of Large Numbers</strong> says that as the number of flips grows, the observed share of heads gets closer and closer to 50%.</p>
+      <p>The chart below was made with Python and matplotlib (<code>analysis.py</code>): five independent runs of 10,000 flips each. Notice how wild they are at the start and how tightly they converge by the end.</p>
+      <img src="{{ url_for('static', filename='img/convergence.png') }}" alt="Five runs of 10,000 coin flips converging to 50% heads"
+           class="convergence" onerror="this.replaceWith(Object.assign(document.createElement('p'),{className:'muted',textContent:'Run python analysis.py to generate this chart.'}))">
+    </section>
+  </main>
+
+  <footer class="site-footer">Built with Python, Flask &amp; Chart.js</footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
