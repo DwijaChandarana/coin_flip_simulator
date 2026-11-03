@@ -4,6 +4,8 @@ An animated coin flip simulator with live statistics and probability charts, bui
 
 ## Features
 - **3D coin flip animation**: the coin is tossed, spins and lands on the result chosen by the Python backend
+- **Flip many at once**: type how many flips you want (1 to 100,000), or use the 10 / 100 / 1,000 / 10,000 quick buttons, and see that batch's heads/tails split
+- **Analyze a range of flips**: choose any stretch (e.g. flips 1–500, or the "Last batch" / "First half" / "Second half" / "All flips" shortcuts) and get its heads/tails split, longest streaks and where they happened, number of runs, a fairness check (z-score), its own heads % graph, and every flip listed for ranges up to 200
 - **Live stats**: heads/tails counts and percentages, current streak, best streaks, and a heads-vs-tails ratio bar
 - **Flip history**: the last 20 flips shown as chips
 - **Probability chart**: running heads % compared with the expected 50%, updated after every flip
@@ -42,7 +44,8 @@ pytest
 | Method | Route        | Description                         |
 |--------|--------------|-------------------------------------|
 | GET    | `/`          | The web app                         |
-| POST   | `/api/flip`  | Flip once → `{ result, stats }`     |
+| POST   | `/api/flip`  | Flip once, or send `{"count": n}` (1–100,000) to flip n times → `{ result, batch, stats }` |
+| GET    | `/api/analyze?start=a&end=b` | Analysis of flips a to b (1-based, inclusive) |
 | GET    | `/api/stats` | Current statistics                  |
 | POST   | `/api/reset` | Clear all statistics                |
 
@@ -52,7 +55,6 @@ Each flip of a fair coin has probability ½ for heads and ½ for tails, and ever
 ![Convergence chart](static/img/convergence.png)
 
 ## Ideas for later
-- Bulk simulation (flip N coins at once)
 - A biased-coin slider
 - Saving stats in localStorage or a database
 - Deploying to Render or PythonAnywhere

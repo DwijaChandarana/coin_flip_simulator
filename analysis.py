@@ -20,9 +20,8 @@ OUT = Path(__file__).parent / "static" / "img" / "convergence.png"
 
 def simulate_run(n):
     stats = CoinStats()
-    for _ in range(n):
-        stats.flip()
-    return stats.heads_pct_series
+    stats.flip_many(n)
+    return [stats.heads_pct_at(i) for i in range(n)]
 
 
 def main():

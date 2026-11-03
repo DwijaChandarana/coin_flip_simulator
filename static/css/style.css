@@ -50,7 +50,7 @@ body {
   display: grid; gap: 20px;
   grid-template-columns: 1fr 1fr;
 }
-.chart-card, .about-card { grid-column: 1 / -1; }
+.chart-card, .range-card, .about-card { grid-column: 1 / -1; }
 
 .card {
   background: var(--card);
@@ -142,6 +142,35 @@ body {
 .btn.ghost:hover { border-color: var(--muted); }
 .btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
 
+/* Flip-many form */
+.bulk {
+  width: 100%; max-width: 360px; margin-top: 22px; padding-top: 18px;
+  border-top: 1px solid var(--card-border);
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+}
+.bulk label { font-size: 0.92rem; color: var(--muted); }
+.bulk-row { display: flex; gap: 10px; width: 100%; }
+.bulk-row input {
+  flex: 1; min-width: 0;
+  font: inherit; font-size: 1.05rem; font-weight: 700; text-align: center;
+  color: var(--text); background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border); border-radius: 999px; padding: 10px 16px;
+}
+.bulk-row input:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+.bulk-row input.invalid { border-color: #ff6b81; }
+.bulk-row .btn { padding: 10px 26px; }
+.presets { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+.preset {
+  font: inherit; font-size: 0.82rem; font-weight: 500; cursor: pointer;
+  color: var(--text); background: transparent;
+  border: 1px solid var(--card-border); border-radius: 999px; padding: 4px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.preset:hover:not(:disabled) { border-color: var(--gold); background: rgba(245, 197, 66, 0.08); }
+.preset:disabled { opacity: 0.5; cursor: not-allowed; }
+.bulk-error { color: #ff6b81; font-size: 0.85rem; min-height: 1.2em; }
+.result .batch { display: block; font-size: 0.9rem; font-weight: 500; color: var(--muted); margin-top: 2px; }
+
 .hint { color: var(--muted); font-size: 0.85rem; margin-top: 14px; }
 .hint label { cursor: pointer; }
 kbd {
@@ -187,6 +216,42 @@ kbd {
 /* Chart */
 .chart-box { position: relative; height: 300px; margin-top: 12px; }
 
+/* Range analysis */
+.range-form { margin-top: 16px; display: flex; flex-direction: column; gap: 10px; }
+.range-inputs { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-end; }
+.range-inputs label {
+  display: flex; flex-direction: column; gap: 6px;
+  font-size: 0.85rem; color: var(--muted); flex: 1 1 140px;
+}
+.range-inputs input {
+  font: inherit; font-size: 1.05rem; font-weight: 700; text-align: center;
+  color: var(--text); background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--card-border); border-radius: 999px; padding: 10px 16px; width: 100%;
+}
+.range-inputs input:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+.range-inputs input.invalid { border-color: #ff6b81; }
+.range-inputs input:disabled { opacity: 0.5; }
+.range-inputs .btn { padding: 10px 26px; }
+.range-presets { justify-content: flex-start; }
+.range-empty { margin-top: 4px; }
+
+.range-results { margin-top: 8px; animation: fadeUp 0.35s ease-out; }
+.range-results h3 { color: var(--text); font-size: 1.05rem; font-weight: 700; margin-top: 4px; }
+.range-grid { grid-template-columns: repeat(3, 1fr); }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+.verdict {
+  margin-top: 16px; padding: 12px 16px; border-radius: 14px; font-size: 0.92rem;
+  border: 1px solid var(--card-border); background: rgba(255, 255, 255, 0.04);
+}
+.verdict strong { display: block; margin-bottom: 2px; }
+.verdict.fair    { border-color: rgba(142, 224, 122, 0.5); background: rgba(142, 224, 122, 0.08); }
+.verdict.unusual { border-color: rgba(245, 197, 66, 0.5);  background: rgba(245, 197, 66, 0.08); }
+.verdict.rare    { border-color: rgba(255, 107, 129, 0.5); background: rgba(255, 107, 129, 0.08); }
+
+.sequence { display: flex; flex-wrap: wrap; gap: 4px; }
+.sequence .chip { width: 24px; height: 24px; font-size: 0.72rem; }
+
 /* About */
 .about-card p { margin-bottom: 12px; color: #cfd3e8; }
 .about-card code { background: rgba(255, 255, 255, 0.08); padding: 1px 6px; border-radius: 5px; }
@@ -197,6 +262,7 @@ kbd {
   .layout { grid-template-columns: 1fr; }
   :root { --coin-size: 150px; }
   .chart-box { height: 240px; }
+  .range-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (prefers-reduced-motion: reduce) {
